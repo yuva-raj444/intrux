@@ -12,8 +12,16 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 from dotenv import load_dotenv
 
+# Initialize MediaPipe pose
+mp_pose = mp.solutions.pose
+pose = mp_pose.Pose()
+mp_drawing = mp.solutions.drawing_utils
+
 # Load environment variables from .env file
 load_dotenv()
+# Initialize Pygame mixer for audio alert
+pygame.mixer.init()
+ALERT_SOUND_PATH = 'alert me.wav'
 
 # Email configuration loaded from environment variables
 EMAIL_CONFIG = {
@@ -24,19 +32,6 @@ EMAIL_CONFIG = {
     'smtp_port': int(os.getenv('SMTP_PORT', 587)),
 }
 
-# File paths from environment variables or defaults
-ALERT_SOUND_PATH = os.getenv('ALERT_SOUND_PATH', 'alert me.wav')
-RECORDING_DIR = os.getenv('RECORDING_DIR', 'recordings')
-CONFIG_FILE = os.getenv('CONFIG_FILE', 'config.json')
-
-# Initialize MediaPipe pose
-mp_pose = mp.solutions.pose
-pose = mp_pose.Pose()
-mp_drawing = mp.solutions.drawing_utils
-
-# Initialize Pygame mixer for audio alert
-pygame.mixer.init()
-
 # Global variables for drawing
 drawing = False
 start_point = None
@@ -44,9 +39,11 @@ end_point = None
 zone_points = []
 
 # Global variables for recording
+# Global variables for recording
 recording = False
 out = None
-
+RECORDING_DIR = 'recordings'
+CONFIG_FILE = 'config.json'
 # Default monitoring schedule
 monitoring_schedule = {
     'start_time': '08:00',
@@ -75,7 +72,6 @@ def is_monitoring_active():
     end = dt_time.fromisoformat(monitoring_schedule['end_time'])
     return start <= current_time <= end
 
-# Play the alert sound
 def play_alert():
     pygame.mixer.music.load(ALERT_SOUND_PATH)
     pygame.mixer.music.play()
