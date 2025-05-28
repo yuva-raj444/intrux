@@ -86,18 +86,6 @@ Simulate an intrusion (e.g., show a hand or motion to the webcam).
 
 You should hear the alert sound and receive an email notification.
 
-## 🙌 Contributing
-Contributions, bug fixes, and suggestions are welcome!
-
-Fork the repository
-
-Create your feature branch
-
-Commit your changes
-
-Push to the branch
-
-Open a Pull Request
 
 ## 📄 License
 This project is licensed under the MIT License.
